@@ -5,7 +5,7 @@ pygame.init()
 
 
 class TicTacToe:
-    def __init__(self,
+    def __init__(self,										 # констурктор класса
                  size_block=100,
                  margin=10,
                  cnt_blocks=3,
@@ -36,13 +36,13 @@ class TicTacToe:
         self.current_color = self.block_color
         self.current_state = 0
 
-    def run_game(self) -> None:
+    def run_game(self) -> None:									# основная функция для игры
         pygame.display.set_caption(self.caption)
         while True:
             self.event_handling()
             self.build_playground()
 
-    def build_playground(self) -> None:
+    def build_playground(self) -> None:								# построение игрового поля и обработка событий
 
         for row in range(self.cnt_blocks):
             for col in range(self.cnt_blocks):
@@ -85,7 +85,7 @@ class TicTacToe:
 
         pygame.display.update()
 
-    def event_handling(self) -> None:
+    def event_handling(self) -> None:                                                 # метод для обработки состояний
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
