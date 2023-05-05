@@ -1,6 +1,6 @@
 import pygame
 import sys
-
+import time
 pygame.init()
 
 
@@ -39,6 +39,8 @@ class TicTacToe:
 
     def run_game(self) -> None:									# основная функция для игры
         pygame.display.set_caption(self.caption)
+        icon = pygame.image.load("Rocket.jpg")
+        pygame.display.set_icon(icon)
         while True:
             self.event_handling()                               # процедура обработки событий
             self.build_playground()                             # процедура построения элементов игрового поля
@@ -83,6 +85,8 @@ class TicTacToe:
                 text_x = self.screen.get_width() / 2 - text_rect.width / 2
                 text_y = self.screen.get_height() / 2 - text_rect.height / 2
                 self.screen.blit(text, [text_x, text_y])
+                sound = pygame.mixer.Sound("radostnoe-ura.mp3")
+                sound.play()
 
         pygame.display.update()
 
