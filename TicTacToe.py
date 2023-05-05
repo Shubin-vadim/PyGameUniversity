@@ -74,16 +74,23 @@ class TicTacToe:
             if self.game_over:                                # вывод сообщения после игры
                 self.screen.fill(self.background_color)
                 font = pygame.font.SysFont('stxingkai', 40)
+                text_restart = 'Press R for Restart'
                 if self.game_over == 1:
                     text = font.render('Win X!', True, self.tic_color)
+                    text_restart = font.render(text_restart, True, self.tic_color)
                 elif self.game_over == 2:
                     text = font.render('Win 0!', True, self.tac_toe_color)
+                    text_restart = font.render(text_restart, True, self.tac_toe_color)
                 else:
                     text = font.render('Friendship has won!', True, self.nobody_win_color)
+                    text_restart = font.render(text_restart, True, self.nobody_win_color)
                 text_rect = text.get_rect()
                 text_x = self.screen.get_width() / 2 - text_rect.width / 2
-                text_y = self.screen.get_height() / 2 - text_rect.height / 2
+                text_y = self.screen.get_height() / 2 - text_rect.height - 30
+                text_restart_x = self.screen.get_width() / 2 - 120
+                text_restart_y = text_y + 50
                 self.screen.blit(text, [text_x, text_y])
+                self.screen.blit(text_restart, [text_restart_x, text_restart_y])
                 sound = pygame.mixer.Sound("radostnoe-ura.mp3")
                 sound.play()
 
