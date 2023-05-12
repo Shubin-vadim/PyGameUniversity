@@ -15,7 +15,8 @@ class TicTacToe:
                  nobody_win_color=(0, 255, 255),            # background-color в случае ничьи
                  x_color=(0, 0, 255),
                  o_color=(255, 0, 255),
-                 caption="Крестики-нолики") -> None:
+                 caption="Крестики-нолики",
+                 ) -> None:
 
         self.margin = margin
         self.cnt_blocks = cnt_blocks
@@ -35,11 +36,14 @@ class TicTacToe:
         self.cnt = 0
         self.current_color = self.block_color
         self.game_over = False
+        self.background_sound = pygame.mixer.Sound("src/sounds/melody.mp3")
+        self.hooray_win = "src/sounds/radostnoe-ura.mp3"
 
     def run_game(self) -> None:									# основная функция для игры
         pygame.display.set_caption(self.caption)
-        icon = pygame.image.load("Rocket.jpg")
+        icon = pygame.image.load("src/imgs/Rocket.jpg")
         pygame.display.set_icon(icon)
+        self.background_sound.play()
         while True:
             self.event_handling()                               # процедура обработки событий
             self.build_playground()                             # процедура построения элементов игрового поля
@@ -72,15 +76,18 @@ class TicTacToe:
                 self.game_over = self.check_win(2)
 
             if self.game_over:                                # вывод сообщения после игры
+                self.background_sound.stop()
                 self.screen.fill(self.background_color)
                 font = pygame.font.SysFont('stxingkai', 40)
                 text_restart = 'Press R for Restart'
                 if self.game_over == 1:
-                    text = font.render('Win X!', True, self.tic_color)
+                    text = font.render('Win first gamer!', True, self.tic_color)
                     text_restart = font.render(text_restart, True, self.tic_color)
+                    self.hooray_win = "src/sounds/radostnoe-ura.mp3"
                 elif self.game_over == 2:
-                    text = font.render('Win 0!', True, self.tac_toe_color)
+                    text = font.render('Win second gamer!', True, self.tac_toe_color)
                     text_restart = font.render(text_restart, True, self.tac_toe_color)
+                    self.hooray_win = "src/sounds/honary_people.mp3"
                 else:
                     text = font.render('Friendship has won!', True, self.nobody_win_color)
                     text_restart = font.render(text_restart, True, self.nobody_win_color)
@@ -91,7 +98,7 @@ class TicTacToe:
                 text_restart_y = text_y + 50
                 self.screen.blit(text, [text_x, text_y])
                 self.screen.blit(text_restart, [text_restart_x, text_restart_y])
-                sound = pygame.mixer.Sound("radostnoe-ura.mp3")
+                sound = pygame.mixer.Sound(self.hooray_win)
                 sound.play()
 
         pygame.display.update()
@@ -111,6 +118,7 @@ class TicTacToe:
                         self.states[row][col] = 2
                     self.cnt += 1
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:   # Реастарт игры при нажатии на "R"
+                self.background_sound.play()
                 self.cnt = 0
                 self.states = [[0] * self.cnt_blocks for i in range(self.cnt_blocks)]
                 self.game_over = False
